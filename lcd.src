@@ -1,0 +1,696 @@
+      	Section code,,C
+
+	xref 	_input
+	xdef 	_enableLCD
+	xdef	_enableLCD2
+	xdef 	_enableKeypad
+	xdef	_mainMenu1
+	xdef	_mainMenu2
+	xdef 	_clear
+	xdef 	_csOut
+	xdef 	_scOut
+	xdef 	_tbOut
+	xdef 	_bhOut
+	xdef	_tgOut
+	xdef	_sfOut
+
+_enableLCD: 			; for menu1
+      	jsr 	LCDLoop
+      	move.b 	#1,$600001 	; clear the LCD screen 
+      	jsr 	LCDLoop
+      	move.b 	#%1100,$600001 	; d = on, c = off, b = off 
+	bra	_mainMenu1
+      	rts
+
+_enableLCD2: 			; for menu2
+      	jsr 	LCDLoop
+      	move.b 	#1,$600001 	; clear the LCD screen 
+      	jsr 	LCDLoop
+      	move.b 	#%1100,$600001 	; d = on, c = off, b = off 
+	bra	_mainMenu2
+      	rts
+
+_enableKeypad:
+      	move.l 	#$100000,a0  	
+      	move.w 	#$4EF9,(a0)
+      	move.l 	#keyPad,2(a0) 
+      	or.w 	#$700,SR  	; allow level 1 interrupts
+      	and.w 	#$F8FF,SR 
+      	rts
+
+keyPad:
+      	movem.l d0,-(sp)
+      	move.b	$500001,d0
+      	and.b 	#$F,d0
+      	move.b 	d0,_input
+      	movem.l (sp)+,d0
+      	rte
+
+LCDLoop:
+      	move.b 	$600001,d1
+      	btst 	#7,d1
+      	bne 	LCDLoop
+    	rts
+
+_clear:
+      	jsr 	LCDLoop
+      	move.b 	#1,$600001 	
+      	rts
+ 
+_mainMenu1:			; for keys 1-3
+      	jsr 	LCDLoop
+      	move.b 	#68,$600003  	; D
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#103,$600003  	; g
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#116,$600003  	; t
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+      	jsr 	LCDLoop
+      	move.b 	#77,$600003  	; M
+      	jsr 	LCDLoop
+      	move.b 	#117,$600003  	; u
+      	jsr 	LCDLoop
+      	move.b 	#115,$600003  	; s
+	jsr	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#99,$600003  	; c
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#80,$600003  	; P
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#121,$600003  	; y
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#114,$600003  	; r
+
+      	jsr 	LCDLoop
+      	move.b 	#50,$600003  	; 2
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+      	jsr 	LCDLoop
+	jsr	scTitle
+
+
+	jsr	LCDLoop
+      	move.b 	#49,$600003  	; 1
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	jsr	csTitle
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	jsr	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+
+	jsr	LCDLoop
+      	move.b 	#51,$600003  	; 3
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+	jsr	tbTitle
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	rts
+
+_mainMenu2:			; for keys 4-6
+      	jsr 	LCDLoop
+      	move.b 	#68,$600003  	; D
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#103,$600003  	; g
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#116,$600003  	; t
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#77,$600003  	; M
+      	jsr 	LCDLoop
+      	move.b 	#117,$600003  	; u
+      	jsr 	LCDLoop
+      	move.b 	#115,$600003  	; s
+	jsr	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#99,$600003  	; c
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#80,$600003  	; P
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#121,$600003  	; y
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#114,$600003  	; r
+
+      	jsr 	LCDLoop
+      	move.b 	#53,$600003  	; 5
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+      	jsr 	LCDLoop
+	jsr	sfTitle
+	jsr	LCDLoop
+	move.b	#132,$600003
+
+
+	jsr	LCDLoop
+      	move.b 	#52,$600003  	; 4
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	jsr	bhTitle
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	jsr	LCDLoop
+      	move.b 	#54,$600003  	; 6
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+	jsr	tgTitle
+	rts
+
+
+nowPlaying:
+      	jsr 	LCDLoop
+      	move.b 	#78,$600003  	; N
+      	jsr 	LCDLoop
+      	move.b 	#111,$600003  	; o
+      	jsr 	LCDLoop
+      	move.b 	#119,$600003  	; w
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#80,$600003  	; P
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#121,$600003  	; y
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#110,$600003  	; n
+      	jsr 	LCDLoop
+      	move.b 	#103,$600003  	; g
+	jsr	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+	rts
+
+_csOut:
+	jsr	nowPlaying
+	jsr	csArtist
+	jsr	csTitle
+	rts
+      	rts
+
+csTitle:
+	jsr	LCDLoop
+      	move.b 	#67,$600003  	; C
+      	jsr 	LCDLoop
+      	move.b 	#104,$600003  	; h
+      	jsr 	LCDLoop
+      	move.b 	#114,$600003  	; r
+      	jsr 	LCDLoop
+      	move.b 	#111,$600003  	; o
+      	jsr 	LCDLoop
+      	move.b 	#109,$600003  	; m
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#116,$600003  	; t
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#99,$600003  	; c
+	rts
+
+csArtist:
+      	jsr 	LCDLoop
+      	move.b 	#83,$600003  	; S
+      	jsr 	LCDLoop
+      	move.b 	#99,$600003  	; c
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	jsr	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+	rts
+
+_scOut:
+	jsr	nowPlaying
+	jsr	scArtist
+	jsr	scTitle
+	rts
+
+scTitle:
+      	jsr 	LCDLoop
+      	move.b 	#83,$600003  	; S
+      	jsr 	LCDLoop
+      	move.b 	#119,$600003  	; w
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#116,$600003  	; t
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#67,$600003  	; C
+      	jsr 	LCDLoop
+      	move.b 	#104,$600003  	; h
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#100,$600003  	; d
+	jsr	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#79,$600003  	; O
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#77,$600003  	; M
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#110,$600003  	; n
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+	rts
+
+scArtist:
+      	jsr 	LCDLoop
+      	move.b 	#71,$600003  	; G
+      	jsr 	LCDLoop
+      	move.b 	#117,$600003  	; u
+      	jsr 	LCDLoop
+      	move.b 	#110,$600003  	; n
+      	jsr 	LCDLoop
+      	move.b 	#115,$600003  	; s
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#78,$600003  	; N
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#82,$600003  	; R
+      	jsr 	LCDLoop
+      	move.b 	#111,$600003  	; o
+      	jsr 	LCDLoop
+      	move.b 	#115,$600003  	; s
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+	jsr	LCDLoop
+      	move.b 	#115,$600003  	; s
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	rts
+
+_tbOut:
+	jsr	nowPlaying
+	jsr	tbArtist
+	jsr	tbTitle
+	rts
+
+
+tbTitle:
+      	jsr 	LCDLoop
+      	move.b 	#84,$600003  	; T
+      	jsr 	LCDLoop
+      	move.b 	#117,$600003  	; u
+      	jsr 	LCDLoop
+      	move.b 	#98,$600003  	; b
+      	jsr 	LCDLoop
+      	move.b 	#117,$600003  	; u
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#114,$600003  	; r
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#66,$600003  	; B
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+	jsr	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#115,$600003  	; s
+	rts
+
+tbArtist:
+      	jsr 	LCDLoop
+      	move.b 	#77,$600003  	; M
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#107,$600003  	; k
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#79,$600003  	; O
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#100,$600003  	; d
+      	jsr 	LCDLoop
+      	move.b 	#102,$600003  	; f
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+	jsr	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#100,$600003  	; d
+	jsr	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	jsr	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	rts
+
+
+_bhOut:
+	jsr	nowPlaying
+	jsr	bhArtist
+	jsr	bhTitle
+	rts
+
+bhTitle:
+      	jsr 	LCDLoop
+      	move.b 	#66,$600003  	; B
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#118,$600003  	; v
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#114,$600003  	; r
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#121,$600003  	; y
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#72,$600003  	; H
+      	jsr 	LCDLoop
+      	move.b 	#105,$600003  	; i
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+	jsr	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#115,$600003  	; s
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#67,$600003  	; C
+      	jsr 	LCDLoop
+      	move.b 	#111,$600003  	; o
+      	jsr 	LCDLoop
+      	move.b 	#112,$600003  	; p
+	rts
+
+bhArtist:
+      	jsr 	LCDLoop
+      	move.b 	#84,$600003  	; T
+      	jsr 	LCDLoop
+      	move.b 	#104,$600003  	; h
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#109,$600003  	; m
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#83,$600003  	; S
+      	jsr 	LCDLoop
+      	move.b 	#111,$600003  	; o
+      	jsr 	LCDLoop
+      	move.b 	#110,$600003  	; n
+      	jsr 	LCDLoop
+      	move.b 	#103,$600003  	; g
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	jsr	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	rts
+
+_sfOut:
+	jsr	nowPlaying
+	jsr	sfArtist
+	jsr	sfTitle
+	rts
+
+sfTitle:
+      	jsr 	LCDLoop
+      	move.b 	#83,$600003  	; S
+      	jsr 	LCDLoop
+      	move.b 	#111,$600003  	; o
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#70,$600003  	; F
+      	jsr 	LCDLoop
+      	move.b 	#114,$600003  	; r
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#115,$600003  	; s
+      	jsr 	LCDLoop
+      	move.b 	#104,$600003  	; h
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#83,$600003  	; S
+      	jsr 	LCDLoop
+      	move.b 	#111,$600003  	; o
+	jsr	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#67,$600003  	; C
+      	jsr 	LCDLoop
+      	move.b 	#108,$600003  	; l
+      	jsr 	LCDLoop
+      	move.b 	#101,$600003  	; e
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#110,$600003  	; n
+	rts
+
+sfArtist:
+      	jsr 	LCDLoop
+      	move.b 	#79,$600003  	; O
+      	jsr 	LCDLoop
+      	move.b 	#117,$600003  	; u
+      	jsr 	LCDLoop
+      	move.b 	#116,$600003  	; t
+      	jsr 	LCDLoop
+      	move.b 	#107,$600003  	; k
+      	jsr 	LCDLoop
+      	move.b 	#97,$600003  	; a
+      	jsr 	LCDLoop
+      	move.b 	#115,$600003  	; s
+      	jsr 	LCDLoop
+      	move.b 	#116,$600003  	; t
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	jsr	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	;
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+	rts
+
+_tgOut:
+	jsr	nowPlaying
+	jsr	bhArtist
+	jsr	tgTitle
+	rts
+
+tgTitle:
+	jsr	LCDLoop
+      	move.b 	#84,$600003  	; T
+      	jsr 	LCDLoop
+      	move.b 	#111,$600003  	; o
+      	jsr 	LCDLoop
+      	move.b 	#112,$600003  	; p
+      	jsr 	LCDLoop
+      	move.b 	#132,$600003  	; 
+      	jsr 	LCDLoop
+      	move.b 	#71,$600003  	; G
+      	jsr 	LCDLoop
+      	move.b 	#117,$600003  	; u
+      	jsr 	LCDLoop
+      	move.b 	#110,$600003  	; n
+	rts
+
+	
+

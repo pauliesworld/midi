@@ -1,0 +1,458 @@
+	section code,,C
+	xref _note1
+	xref _note2
+
+	xdef _a_low_loop
+	xdef _a_high_loop
+	xdef _as_low_loop
+	xdef _as_high_loop
+	xdef _b_low_loop
+	xdef _b_high_loop
+	xdef _c_low_loop
+	xdef _c_high_loop
+	xdef _cs_low_loop
+	xdef _cs_high_loop
+	xdef _d_low_loop
+	xdef _d_high_loop
+	xdef _ds_low_loop
+	xdef _ds_high_loop
+	xdef _e_low_loop
+	xdef _e_high_loop
+	xdef _f_low_loop
+	xdef _f_high_loop
+	xdef _fs_low_loop
+	xdef _fs_high_loop
+	xdef _g_low_loop
+	xdef _g_high_loop
+	xdef _gs_low_loop
+	xdef _gs_high_loop
+	xdef _silentloop
+
+
+	xref _alow
+	xref _ahigh
+	xref _aslow
+	xref _ashigh
+	xref _blow
+	xref _bhigh
+	xref _clow
+	xref _chigh
+	xref _cslow
+	xref _cshigh
+	xref _dlow
+	xref _dhigh
+	xref _dslow
+	xref _dshigh
+	xref _elow
+	xref _ehigh
+	xref _flow
+	xref _fhigh
+	xref _fslow
+	xref _fshigh
+	xref _glow
+	xref _ghigh
+	xref _gslow
+	xref _gshigh
+
+
+;A_low
+
+_a_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_a_low:
+	lea.l 	_alow,a0
+
+a_low_continue:
+	move.b	(a0)+,(a1)
+	bne	a_low_continue
+	subq.l	#1,d0
+	bne	pre_a_low
+	rts
+
+
+;AS_low
+
+_as_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_as_low:
+	lea.l 	_aslow,a0
+
+as_low_continue:
+	move.b	(a0)+,(a1)
+	bne	as_low_continue
+	subq.l	#1,d0
+	bne	pre_as_low
+	rts
+
+;B_low
+
+_b_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_b_low:
+	lea.l 	_blow,a0
+
+b_low_continue:
+	move.b	(a0)+,(a1)
+	bne	b_low_continue
+	subq.l	#1,d0
+	bne	pre_b_low
+	rts
+
+;C_low
+
+_c_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_c_low:
+	lea.l 	_clow,a0
+
+c_low_continue:
+	move.b	(a0)+,(a1)
+	bne	c_low_continue
+	subq.l	#1,d0
+	bne	pre_c_low
+	rts
+
+;CS_low
+
+_cs_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_cs_low:
+	lea.l 	_cslow,a0
+
+cs_low_continue:
+	move.b	(a0)+,(a1)
+	bne	cs_low_continue
+	subq.l	#1,d0
+	bne	pre_cs_low
+	rts
+
+;D_low
+
+_d_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_d_low:
+	lea.l 	_dlow,a0
+
+d_low_continue:
+	move.b	(a0)+,(a1)
+	bne	d_low_continue
+	subq.l	#1,d0
+	bne	pre_d_low
+	rts
+
+;DS_low
+
+_ds_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_ds_low:
+	lea.l 	_dslow,a0
+
+ds_low_continue:
+	move.b	(a0)+,(a1)
+	bne	ds_low_continue
+	subq.l	#1,d0
+	bne	pre_ds_low
+	rts
+
+;E_low
+
+_e_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_e_low:
+	lea.l 	_elow,a0
+
+e_low_continue:
+	move.b	(a0)+,(a1)
+	bne	e_low_continue
+	subq.l	#1,d0
+	bne	pre_e_low
+	rts
+
+;F_low
+
+_f_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_f_low:
+	lea.l 	_flow,a0
+
+f_low_continue:
+	move.b	(a0)+,(a1)
+	bne	f_low_continue
+	subq.l	#1,d0
+	bne	pre_f_low
+	rts
+
+;FS_low
+
+_fs_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_fs_low:
+	lea.l 	_fslow,a0
+
+fs_low_continue:
+	move.b	(a0)+,(a1)
+	bne	fs_low_continue
+	subq.l	#1,d0
+	bne	pre_fs_low
+	rts
+
+;G_low
+
+_g_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_g_low:
+	lea.l 	_glow,a0
+
+g_low_continue:
+	move.b	(a0)+,(a1)
+	bne	g_low_continue
+	subq.l	#1,d0
+	bne	pre_g_low
+	rts
+
+;GS_low
+
+_gs_low_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_gs_low:
+	lea.l 	_gslow,a0
+
+gs_low_continue:
+	move.b	(a0)+,(a1)
+	bne	gs_low_continue
+	subq.l	#1,d0
+	bne	pre_gs_low
+	rts
+
+;A_high
+
+_a_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_a_high:
+	lea.l 	_ahigh,a0
+
+a_high_continue:
+	move.b	(a0)+,(a1)
+	bne	a_high_continue
+	subq.l	#1,d0
+	bne	pre_a_high
+	rts
+
+;AS_high
+
+_as_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_as_high:
+	lea.l 	_ashigh,a0
+
+as_high_continue:
+	move.b	(a0)+,(a1)
+	bne	as_high_continue
+	subq.l	#1,d0
+	bne	pre_as_high
+	rts
+
+;B_high
+
+_b_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_b_high:
+	lea.l 	_bhigh,a0
+
+b_high_continue:
+	move.b	(a0)+,(a1)
+	bne	b_high_continue
+	subq.l	#1,d0
+	bne	pre_b_high
+	rts
+
+;C_high
+
+_c_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_c_high:
+	lea.l 	_chigh,a0
+
+c_high_continue:
+	move.b	(a0)+,(a1)
+	bne	c_high_continue
+	subq.l	#1,d0
+	bne	pre_c_high
+	rts
+
+;CS_high
+
+_cs_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_cs_high:
+	lea.l 	_cshigh,a0
+
+cs_high_continue:
+	move.b	(a0)+,(a1)
+	bne	cs_high_continue
+	subq.l	#1,d0
+	bne	pre_cs_high
+	rts
+
+;D_high
+
+_d_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_d_high:
+	lea.l 	_dhigh,a0
+
+d_high_continue:
+	move.b	(a0)+,(a1)
+	bne	d_high_continue
+	subq.l	#1,d0
+	bne	pre_d_high
+	rts
+
+;DS_high
+
+_ds_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_ds_high:
+	lea.l 	_dshigh,a0
+
+ds_high_continue:
+	move.b	(a0)+,(a1)
+	bne	ds_high_continue
+	subq.l	#1,d0
+	bne	pre_ds_high
+	rts
+
+;E_high
+
+_e_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_e_high:
+	lea.l 	_ehigh,a0
+
+e_high_continue:
+	move.b	(a0)+,(a1)
+	bne	e_high_continue
+	subq.l	#1,d0
+	bne	pre_e_high
+	rts
+
+;F_high
+
+_f_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_f_high:
+	lea.l 	_fhigh,a0
+
+f_high_continue:
+	move.b	(a0)+,(a1)
+	bne	f_high_continue
+	subq.l	#1,d0
+	bne	pre_f_high
+	rts
+
+;FS_high
+
+_fs_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_fs_high:
+	lea.l 	_fshigh,a0
+
+fs_high_continue:
+	move.b	(a0)+,(a1)
+	bne	fs_high_continue
+	subq.l	#1,d0
+	bne	pre_fs_high
+	rts
+
+;G_high
+
+_g_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_g_high:
+	lea.l 	_ghigh,a0
+
+g_high_continue:
+	move.b	(a0)+,(a1)
+	bne	g_high_continue
+	subq.l	#1,d0
+	bne	pre_g_high
+	rts
+
+;GS_high
+
+
+_gs_high_loop:
+	lea.l	$400001,a1
+	move.l	4(sp),d0
+
+pre_gs_high:
+	lea.l 	_gshigh,a0
+
+gs_high_continue:
+	move.b	(a0)+,(a1)
+	bne	gs_high_continue
+	subq.l	#1,d0
+	bne	pre_gs_high
+	rts
+
+;silence
+
+_silentloop:
+	lea.l	$B00001,a1
+	move.l	4(sp),d0
+
+presilent:
+	lea.l 	_gshigh,a0
+
+silentcontinue:
+	move.b	(a0)+,(a1)
+	bne	silentcontinue
+	subq.l	#1,d0
+	bne	presilent
+	rts
